@@ -1,4 +1,4 @@
-﻿namespace MyFirstBlazorApp.Services;
+﻿namespace BooksStore.Services;
 
 public class ConsoleLoggingService : ILoggingService
 {

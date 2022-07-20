@@ -3,12 +3,12 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:36929",
-      "sslPort": 44355
+      "applicationUrl": "http://localhost:57373",
+      "sslPort": 44386
     }
   },
   "profiles": {
-    "MyFirstBlazorApp": {
+    "BooksStore": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

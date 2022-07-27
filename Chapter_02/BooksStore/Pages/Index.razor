@@ -1,0 +1,78 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@inject IConfiguration Configuration
+@inject IWebAssemblyHostEnvironment Host
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+Welcome to your new app.
+
+<BookCard Book="_firstBook" />
+
+<BookCard Book="_firstBook" WithButton="false" class="mt-3" />
+
+<h3 class="mt-3">Available Books:</h3>
+<div style="display:flex" >
+	@foreach (var book in _books)
+	{
+		<BookCard Book="book" OnAddToCartClicked="AddToCart" />
+	}
+</div>
+
+<h3 class="mt-3">My Cart</h3>
+<ul>
+	@foreach (var item in _booksCart)
+	{
+		<li>@item.Title</li>
+	}
+</ul>
+
+<p>Api Url: @Configuration["ApiUrl"]</p>
+
+
+@if (!Host.IsDevelopment())
+{
+	<SurveyPrompt Title="How is Blazor working for you?" />
+}
+
+@code
+{
+	private Book _firstBook = new Book
+		{
+			AuthorName = "John Smith",
+			PublishingDate = new DateTime(2022, 08, 01),
+			Title = "Mastering Blazor WebAssembly"
+		};
+
+
+	private List<Book> _books = new List<Book>()
+	{
+		new Book
+		{
+			AuthorName = "John Smith",
+			PublishingDate = new DateTime(2021, 01, 12),
+			Title = "Blazor WebAssembly Guide"
+		},
+		new Book
+		{
+			AuthorName = "John Smith",
+			PublishingDate = new DateTime(2022, 03, 13),
+			Title = "Mastering Blazor WebAssembly"
+		},
+		new Book
+		{
+			AuthorName = "John Smith",
+			PublishingDate = new DateTime(2022, 08, 01),
+			Title = "Learning Blazor from A to Z"
+		},
+	};
+
+	private List<Book> _booksCart = new List<Book>();
+	
+
+	private void AddToCart(Book selectedBook)
+	{
+		_booksCart.Add(selectedBook);
+	}
+}

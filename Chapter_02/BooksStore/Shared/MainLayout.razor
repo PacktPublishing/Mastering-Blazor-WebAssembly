@@ -1,0 +1,28 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+			<CascadingValue Value="@_backroundStyle" Name="BackgroundStyle">
+				<CascadingValue Value="@_buttonStyle" Name="ButtonStyle">
+                    @Body
+                </CascadingValue>
+            </CascadingValue>
+        </article>
+    </main>
+</div>
+
+@code
+{
+	private string _backroundStyle = "background-color:#f2f2f2"; 
+	private string _buttonStyle = "background-color:orange";
+	private bool _isBusy = false;
+}

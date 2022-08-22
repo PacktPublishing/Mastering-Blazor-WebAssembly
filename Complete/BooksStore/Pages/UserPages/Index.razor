@@ -9,11 +9,12 @@
 Welcome to our Books Store new app.
 
 <h3 class="mt-3">Available Books:</h3>
-<DataListView ItemType="Book" Items="_books" ColumnsCount="4">
-	<ItemTemplate Context="book">
-		<BookCard Book="@book" OnAddToCartClicked="AddToCart" />
-	</ItemTemplate>
-</DataListView>
+<div style="display:flex" >
+	@foreach (var book in _books)
+	{
+		<BookCard Book="book" OnAddToCartClicked="AddToCart" />
+	}
+</div>
 
 <h3 class="mt-3">My Cart</h3>
 <ul>

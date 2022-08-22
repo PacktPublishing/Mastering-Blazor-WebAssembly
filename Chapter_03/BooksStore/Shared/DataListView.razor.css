@@ -1,0 +1,16 @@
+﻿.grid-container {
+    display: flex; /* Enable the flex box for the elements inside the div */
+    flex-wrap: wrap; /* Wrap the items inside when they reach the end of the row */
+    padding: 5px; /* Define a little inner spacing for the list */
+    border: 0.5px solid #A3A3A3; /* Set a slight border for it */
+}
+
+    .grid-container .grid-item {
+        margin: 4px; /* Define a spacing around each item */
+        cursor: pointer; /* Use pointer cursor to indicate that the item is clickable */
+    }
+
+    .grid-container .empty-collection-title {
+        text-align: center; 
+        margin-top: 10px;
+    }

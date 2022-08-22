@@ -6,21 +6,16 @@
 
 <p role="status">Current count: @currentCount</p>
 
-<DynamicComponent Type="componentType" Parameters="parameters" />
+<LayoutView Layout="typeof(UserLayout)">
+    <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+</LayoutView>
 
 @code {
     private int currentCount = 0;
-
+    
     private void IncrementCount()
     {
         currentCount++;
     }
-
-    private Type componentType = typeof(SurveyPrompt);
-
-    private Dictionary<string, object> parameters = new()
-    {
-        { "Title", "Welcome to Blazor" }
-    };
 
 }

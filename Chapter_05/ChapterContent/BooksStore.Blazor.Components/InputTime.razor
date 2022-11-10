@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Components.Forms;
+@using System.Diagnostics.CodeAnalysis;
+@inherits InputBase<TimeOnly>
+
+<input type="time" @bind-value="@CurrentValue" class="@CssClass"/>
+
+@code {
+	protected override bool TryParseValueFromString(string? value, out TimeOnly result, out string validationErrorMessage)
+	{
+		Console.WriteLine(value);
+		if (string.IsNullOrWhiteSpace(value))
+		{
+			validationErrorMessage = "Invalid time value";
+			return false; 
+		}
+		
+		result = TimeOnly.Parse(value);
+		validationErrorMessage = null;
+		return true;
+	}
+}

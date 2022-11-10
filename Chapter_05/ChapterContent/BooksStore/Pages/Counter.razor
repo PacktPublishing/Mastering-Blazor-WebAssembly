@@ -1,0 +1,28 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+@code {
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "currentCount")]
+    public int? CounterInitialValue { get; set; }
+
+    private int currentCount = 0;
+
+    protected override void OnParametersSet()
+    {
+        if (CounterInitialValue != null)
+            currentCount = CounterInitialValue.Value;
+    }
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+}

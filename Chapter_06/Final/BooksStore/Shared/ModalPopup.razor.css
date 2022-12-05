@@ -1,0 +1,34 @@
+﻿.overlay {
+    position: fixed; /* Set its position based on the screen */
+    width: 100%; /* Set the width to the full screen width */
+    height: 100%; /* Set the height to the full screen height */
+    top: 0; /* Set its top starting point to 0 */
+    left: 0; /* Set its left starting point to 0 */
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    display: flex; /* Define the overlay as flex container to host the modal box */
+    justify-content: center; /* Set the children of the overlay horizonally in the center */
+    align-items: center; /* Set the children of the overlay vertically in the center */
+}
+
+.modal-box {
+    width: 400px; /* Give it a width, this can be set as parameter */
+    background-color: white; /* Give it a white background */
+    border-radius: 10px; /* Set the radius of the corners */
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3); /* Little shadow */
+}
+
+    .modal-box .modal-header {
+        display: flex; /* Set the header as a flex container */
+        align-items: center; /* Align the title and the close button vertically in the center */
+        justify-content: space-between; /* Set the title and the close button on each side of the header */
+        padding: 5px 20px; /* Set a little padding to look a bit better */
+    }
+
+    .modal-box .modal-header .close-button {
+        color: red; /* Set the color of the font to red */
+        cursor: pointer; /* Set the cursor to pointer to indicate that this is clickable */
+    }
+
+    .modal-box .modal-body,.modal-footer {
+        padding: 5px 20px;
+    }

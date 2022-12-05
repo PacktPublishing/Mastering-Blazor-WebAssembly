@@ -1,0 +1,120 @@
+﻿@page "/book/form"
+<PageTitle>BooksStore | Add a new book</PageTitle>
+
+<div class="row">
+	<div class="col-6">
+		<h2>Add a new book</h2>
+		<EditForm Model="_book" OnValidSubmit="HandleBookFormSubmission">
+			<DataAnnotationsValidator />
+			@*<ValidationSummary />*@
+			<div class="form-group mt-1">
+				<label>Title</label>
+				@*<input type="text" @bind-value="@_book.Title" class="form-control" placeholder="Title" />*@
+				<InputText @bind-Value="@_book.Title" class="form-control" />
+				<ValidationMessage For="() => _book.Title"  />
+			</div>
+			<div class="form-group mt-1">
+				<label>Description</label>
+				@*<input type="text" @bind-value="@_book.Description" class="form-control" placeholder="Description" />*@
+				<InputTextArea @bind-Value="@_book.Description" class="form-control" />
+				<ValidationMessage For="() => _book.Description"  />
+			</div>
+			<div class="form-group mt-1">
+				<label>Number of pages</label>
+				@*<input type="number" @bind-value="@_book.PagesCount" class="form-control" placeholder="Number of pages" />*@
+				<InputNumber TValue="int" @bind-Value="@_book.PagesCount" class="form-control" />
+				<ValidationMessage For="() => _book.PagesCount"  />
+			</div>
+			<div class="form-group mt-1">
+				<label>Author</label>
+				@*<input type="text" @bind-value="@_book.Author" class="form-control" placeholder="Author" />*@
+				<InputText @bind-Value="@_book.Author" class="form-control" placeholder="Author" />
+				<ValidationMessage For="() => _book.Author" />
+			</div>
+			<div class="form-group mt-1">
+				<label>Price</label>
+				@*<input type="number" @bind-value="@_book.Price" class="form-control" placeholder="Price" />*@
+				<InputNumber TValue="decimal" @bind-Value="@_book.Price" class="form-control" />
+				<ValidationMessage For="() => _book.Price" />
+			</div>
+	
+			<div class="form-group mt-1">
+				<label>Time</label>
+				@*<input type="number" @bind-value="@_book.Price" class="form-control" placeholder="Price" />*@
+				<BooksStore.Blazor.Components.InputTime @bind-Value="@_time" class="form-control" />
+				<p>Selected time is @_time</p>
+			</div>
+	
+
+		@*	<div class="form-group mt-1">
+				<label>Format</label>
+				<InputRadioGroup TValue="BookFormat" @bind-Value="_bookFormat">
+					<div class="row">
+						<div class="col-4">
+							<label>Paperback</label>
+							<InputRadio TValue="BookFormat" Value="BookFormat.Paperback" />
+						</div>
+						<div class="col-4">
+							<label>E-Book</label>
+							<InputRadio TValue="BookFormat" Value="BookFormat.Ebook" />
+						</div>
+						<div class="col-4">
+							<label>Both</label>
+							<InputRadio TValue="BookFormat" Value="BookFormat.Both" />
+						</div>
+					</div>
+				</InputRadioGroup>
+			</div>*@
+		@*	<div class="form-group mt-4">
+				<label>Category</label>
+				<InputSelect TValue="string" @bind-Value="_book.Category" class="form-control">
+					<option value="">Select category...</option>
+					<option value="web">Web</option>
+					<option value="mobile">Mobile</option>
+					<option value="desktop">Desktop</option>
+					<option value="cloud">Cloud</option>
+				</InputSelect>
+			</div>*@
+			<div class="form-group mt-1">
+				<input type="submit" class="btn btn-success" value="Save" />
+			</div>
+		</EditForm>
+	</div>
+</div>
+
+
+@code
+{
+	private SubmitBook _book = new();
+	private TimeOnly _time = new TimeOnly(12, 30, 0);
+	private void HandleBookFormSubmission()
+	{
+		Console.WriteLine("Book has been submitted successfully");
+		Console.WriteLine($"Title {_book.Title}");
+		Console.WriteLine($"Author {_book.Author}");
+		Console.WriteLine($"Price ${_book.Price}");
+	}
+
+	private void OnFileSelected(InputFileChangeEventArgs e)
+	{
+		var allFiles = e.GetMultipleFiles();
+		foreach (var item in allFiles)
+		{
+			// Process each file
+		}
+		var file = e.File;
+		Console.WriteLine($"File name {file.Name}");
+		Console.WriteLine($"File size {file.Size}");
+		// Access the stream of the file
+		var stream = file.OpenReadStream();
+	}
+
+	private BookFormat _bookFormat = BookFormat.Both;
+
+	enum BookFormat
+	{
+		Paperback,
+		Ebook,
+		Both
+	}
+}

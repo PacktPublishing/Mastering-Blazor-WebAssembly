@@ -1,0 +1,16 @@
+﻿@using BooksStore.Blazor.Components
+<Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(Component1).Assembly }">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(UserLayout)">
+          <div style="text-align:center;margin-top:20px">
+			<h3><span style="color:red"><strong>Oops!</strong></span> Nothing can be found at this address</h3>
+			<p>It looks like the page your requested in the URL cannot be found</p>
+          </div> 
+        </LayoutView>
+    </NotFound>
+</Router>

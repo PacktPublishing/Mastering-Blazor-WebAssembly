@@ -1,0 +1,36 @@
+﻿@using Microsoft.JSInterop;
+@inject IJSRuntime JSRuntime 
+
+<textarea>
+	
+</textarea> 
+
+@code {
+	
+	[Parameter]
+	public string? Content { get; set; }
+	
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			await JSRuntime.InvokeVoidAsync("initializeMarkdownEditor");
+			// Call the setMarkdownEditorValue and pass the Content as a parameter to the JS function
+			try
+			{
+				await JSRuntime.InvokeVoidAsync("setMarkdownEditorValue", Content);
+			}
+			catch
+			{
+				
+			}
+			
+		}
+	}
+	
+	public async Task<string> GetEditorValueAsync()
+	{
+		return await JSRuntime.InvokeAsync<string>("getMarkdownEditorValue");
+	}
+	
+}

@@ -1,0 +1,32 @@
+﻿@page "/counter"
+@inject AppStateContainer AppStateContainer
+@layout UserLayout
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+@* Add the Increment Count button*@
+<button class="btn btn-primary" @onclick="IncrementCount">Increment Count</button>
+@code {
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "currentCount")]
+    public int? CounterInitialValue { get; set; }
+
+    private int currentCount = 0;
+
+    protected override void OnParametersSet()
+    {
+        if (CounterInitialValue != null)
+            currentCount = CounterInitialValue.Value;
+    }
+
+    private void IncrementCount()
+    {
+        currentCount++;
+        AppStateContainer.UpdateCounter(currentCount);
+    }
+
+}

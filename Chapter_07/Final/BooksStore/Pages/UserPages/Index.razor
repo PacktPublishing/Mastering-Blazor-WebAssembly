@@ -1,0 +1,96 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@inject IConfiguration Configuration
+@inject IWebAssemblyHostEnvironment Host
+@inject IBooksService BooksService
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+
+<PageTitle>Index | Page @PageNumber</PageTitle>
+
+<h1>Hello, world!</h1>
+Welcome to our Books Store new app.
+
+<h3 class="mt-3">Available Books:</h3>
+<DataListView ItemType="Book" Items="_books" ColumnsCount="4">
+	<ItemTemplate Context="book">
+		<BookCard Book="@book" OnAddToCartClicked="AddToCart" />
+	</ItemTemplate>
+</DataListView>
+
+<div class="mt-2">
+	<button class="btn btn-primary" @onclick="() => GoToPage(1)">1</button>
+	<button class="btn btn-primary" @onclick="() => GoToPage(2)">2</button>
+	<button class="btn btn-primary" @onclick="() => GoToPage(3)">3</button>
+</div>
+<h3 class="mt-3">My Cart</h3>
+<ul>
+	@foreach (var item in _booksCart)
+	{
+		<li>@item.Title</li>
+	}
+</ul>
+
+<ModalPopup Title="Hi!" IsOpen="@_isWelcomeModalOpen" OnCloseClicked="() => _isWelcomeModalOpen = false">
+	<ChildContent>
+		<p>Welcome to our Books Store, here you will find a huge collection of books to help you build you career in software development, enjoy it!</p>
+	</ChildContent>
+	<FooterContent>
+		<button class="btn btn-primary" @onclick="() => _isWelcomeModalOpen = false">Discover It</button>
+	</FooterContent>
+</ModalPopup>
+
+@code
+{
+
+	[Parameter]
+	[SupplyParameterFromQuery(Name = "pageNumber")]
+	public int PageNumber { get; set; }
+
+	private bool _isWelcomeModalOpen = true;
+
+	private List<Book>? _books = null;
+
+	private void GoToPage(int pageNumber)
+	{
+		PageNumber = pageNumber;
+		Navigation.NavigateTo($"/?pageNumber={pageNumber}");
+		// TODO: Logic to fetch the books by the new page number
+	}
+
+	protected async override Task OnInitializedAsync()
+	{
+		//Call the JS import and pass the path of the external js path that will placed in the wwwroot folder
+		//var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BooksStore/Index.razor.js");
+		//From the module JS object, we can call the getRandomBook() method
+		//var randomBook = await module.InvokeAsync<Book>("getRandomBook");
+		Navigation.LocationChanged += Navigation_LocationChanged;
+		_books = await BooksService.GetAllBooksAsync();
+	}
+
+	protected override void OnParametersSet()
+	{
+		if (PageNumber <= 0)
+			PageNumber = 1;
+	}
+
+	public void Dispose()
+	{
+		Navigation.LocationChanged -= Navigation_LocationChanged;
+	}
+
+
+	private void Navigation_LocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+	{
+		Console.WriteLine($"The location changed to {e.Location}");
+	}
+
+	private List<Book> _booksCart = new List<Book>();
+
+
+	private void AddToCart(Book selectedBook)
+	{
+		_booksCart.Add(selectedBook);
+	}
+}

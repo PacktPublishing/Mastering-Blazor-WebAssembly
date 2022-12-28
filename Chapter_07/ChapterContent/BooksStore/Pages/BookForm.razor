@@ -64,14 +64,18 @@
 		Console.WriteLine($"Author {_book.Author}");
 		Console.WriteLine($"Price ${_book.Price}");
 		Console.WriteLine($"Description {_book.Description}");
-		await ClearFormStateAsync();
+		await ClearSavedStateAsync();
 	}
 
-	private System.Timers.Timer _timer = new(); 
 
 	protected async override Task OnInitializedAsync()
 	{
 		SetupTimer();
+		await CheckSavedStateAsync();
+	}
+
+	private async Task CheckSavedStateAsync()
+	{
 		if (await LocalStorage.ContainKeyAsync("book"))
 		{
 			_book = await LocalStorage.GetItemAsync<SubmitBook>("book");
@@ -80,15 +84,18 @@
 
 	private async Task SaveFormStateAsync()
 	{
+		// Read the description from the SimpleMDE editor
 		_book.Description = await _simpleMde.GetEditorValueAsync();
+		// SaveItemAsync takes a key which is the 'book' and the value to store, it will be serialized and stored as JSON object
 		await LocalStorage.SetItemAsync("book", _book);
 	}
 
-	private async Task ClearFormStateAsync()
+	private async Task ClearSavedStateAsync()
 	{
 		await LocalStorage.RemoveItemAsync("book");
 	}
 
+	private System.Timers.Timer _timer = new(); 
 	private void SetupTimer()
 	{
 		var second = 1000; 

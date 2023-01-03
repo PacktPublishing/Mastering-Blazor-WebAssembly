@@ -1,0 +1,28 @@
+﻿@page "/key-attribute-sample"
+
+<h3>Key Attribute Sample</h3>
+<ul>
+	@foreach (var item in numbers)
+	{
+		<li>
+			@item
+		</li>
+	}
+</ul>
+
+<button @onclick="Insert">Insert</button>
+@code {
+
+	private int counter = 4; 
+
+	private List<int> numbers = new List<int>
+	{
+		0, 1, 2, 3
+	};
+
+	private void Insert()
+	{
+		numbers.Insert(0, counter++);
+	}
+
+}

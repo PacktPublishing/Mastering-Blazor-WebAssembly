@@ -1,0 +1,11 @@
+﻿@page "/render-tree-demo"
+<h1>Welcome </h1>
+<button class="btn btn-primary" @onclick="UpdateName">Update Name</button>
+
+@code {
+	private string name = "Blazor"; 
+	private void UpdateName()
+	{
+		name = ".NET";
+	}
+}

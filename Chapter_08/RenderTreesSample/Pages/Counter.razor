@@ -1,0 +1,28 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+@if (showCounter)
+{
+	<p role="status">Current count: @currentCount</p>
+}
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-danger" @onclick="ToggleCounter">Show/Hide Counter</button>
+
+@code {
+	private int currentCount = 0;
+	private bool showCounter = true;
+	private void ToggleCounter()
+	{
+		// Toggle the value of the showCounter variable
+		showCounter = !showCounter;
+	}
+
+	private void IncrementCount()
+	{
+		currentCount++;
+	}
+}

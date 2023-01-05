@@ -1,6 +1,4 @@
-﻿namespace BooksStore.Services;
-
-public class ConsoleLoggingService : ILoggingService
+﻿public class ConsoleLoggingService : ILoggingService
 {
     public void Log(string message)
     {

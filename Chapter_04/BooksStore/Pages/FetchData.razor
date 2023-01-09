@@ -1,6 +1,6 @@
 ﻿@page "/fetchdata"
 @inject HttpClient Http
-
+@inject ILoggingService LoggingService
 @layout UserLayout
 
 <PageTitle>Weather forecast</PageTitle>
@@ -44,6 +44,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        LoggingService.Log($"Number of items retrieved is {forecasts.Count()}");
     }
 
     public class WeatherForecast

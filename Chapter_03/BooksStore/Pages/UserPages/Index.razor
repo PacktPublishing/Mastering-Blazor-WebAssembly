@@ -2,14 +2,14 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Hosting
 @inject IConfiguration Configuration
 @inject IWebAssemblyHostEnvironment Host
-
+@inject IBooksService BooksService
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 Welcome to our Books Store new app.
 
 <h3 class="mt-3">Available Books:</h3>
-<DataListView ItemType="Book" Items="_books" ColumnsCount="4">
+<DataListView TItemType="Book" Items="_books" ColumnsCount="4">
 	<ItemTemplate Context="book">
 		<BookCard Book="@book" OnAddToCartClicked="AddToCart" />
 	</ItemTemplate>
@@ -35,32 +35,15 @@ Welcome to our Books Store new app.
 @code
 {
 	private bool _isWelcomeModalOpen = true;
-	
-	private List<Book> _books = new List<Book>()
+
+	private List<Book> _books = new List<Book>();
+	protected override async Task OnInitializedAsync()
 	{
-		new Book
-		{
-			AuthorName = "John Smith",
-			PublishingDate = new DateTime(2021, 01, 12),
-			Title = "Blazor WebAssembly Guide"
-		},
-		new Book
-		{
-			AuthorName = "John Smith",
-			PublishingDate = new DateTime(2022, 03, 13),
-			Title = "Mastering Blazor WebAssembly"
-		},
-		new Book
-		{
-			AuthorName = "John Smith",
-			PublishingDate = new DateTime(2022, 08, 01),
-			Title = "Learning Blazor from A to Z"
-		},
-	};
+		_books = await BooksService.GetAllBooksAsync();
+	}
 
 	private List<Book> _booksCart = new List<Book>();
 	
-
 	private void AddToCart(Book selectedBook)
 	{
 		_booksCart.Add(selectedBook);

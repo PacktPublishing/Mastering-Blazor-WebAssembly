@@ -10,5 +10,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 builder.Services.AddScoped<ILoggingService, ConsoleLoggingService>();
+builder.Services.AddScoped<IBooksService, LocalBooksService>(); 
 
 await builder.Build().RunAsync();

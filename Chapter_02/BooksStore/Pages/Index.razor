@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Hosting
 @inject IConfiguration Configuration
 @inject IWebAssemblyHostEnvironment Host
+@inject IBooksService BooksService 
 
 <PageTitle>Index</PageTitle>
 
@@ -38,6 +39,7 @@ Welcome to your new app.
 
 @code
 {
+	
 	private Book _firstBook = new Book
 		{
 			AuthorName = "John Smith",
@@ -46,27 +48,11 @@ Welcome to your new app.
 		};
 
 
-	private List<Book> _books = new List<Book>()
+	private List<Book> _books = new List<Book>();
+	protected override async Task OnInitializedAsync()
 	{
-		new Book
-		{
-			AuthorName = "John Smith",
-			PublishingDate = new DateTime(2021, 01, 12),
-			Title = "Blazor WebAssembly Guide"
-		},
-		new Book
-		{
-			AuthorName = "John Smith",
-			PublishingDate = new DateTime(2022, 03, 13),
-			Title = "Mastering Blazor WebAssembly"
-		},
-		new Book
-		{
-			AuthorName = "John Smith",
-			PublishingDate = new DateTime(2022, 08, 01),
-			Title = "Learning Blazor from A to Z"
-		},
-	};
+		_books = await BooksService.GetAllBooksAsync();
+	}
 
 	private List<Book> _booksCart = new List<Book>();
 	

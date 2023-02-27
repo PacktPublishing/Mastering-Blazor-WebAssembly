@@ -6,7 +6,7 @@ public class SubmitBook
 	// Title is required and value shouldn't be empty and it has to be at least 3 characters long and at most 80 characters long
 	[Required]
 	[StringLength(80, MinimumLength = 3)]
-	public string? Title { get; set; }
+	public string Title { get; set; } = string.Empty;
 
 	// Description is optional but it must be at most 5000 characters long
 	[StringLength(5000)]
@@ -15,7 +15,7 @@ public class SubmitBook
 	// Author is required and value shouldn't be empty and it has to be at least 3 characters long and at most 80 characters long
 	[Required]
 	[StringLength(80, MinimumLength = 3)]
-	public string? Author { get; set; }
+	public string Author { get; set; } = string.Empty;
 
 	[Range(typeof(decimal), "0", "99999")] // price decimal value must be between 0 and 99999
 	public decimal Price { get; set; }

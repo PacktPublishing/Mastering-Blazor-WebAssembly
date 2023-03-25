@@ -16,8 +16,8 @@ namespace BooksStore.Api.Services
 
 		private static List<User> _users = new()
 		{
-			new User(Guid.NewGuid(), "John", "Smith", "admin@masteringblazor.com", "Test.123", "Admin"),
-			new User(Guid.NewGuid(), "Ahmad", "Mozaffar", "ahmad.mozaffar@masteringblazor.com", "Test.123", "Customer"),
+			new User(Guid.NewGuid(), "John", "Smith", "admin@masteringblazor.com", "Test.123", "Admin", "US"),
+			new User(Guid.NewGuid(), "Ahmad", "Mozaffar", "ahmad.mozaffar@masteringblazor.com", "Test.123", "Customer", "UK"),
 		};
 
 		public Task<LoginResponse> LoginAsync(LoginRequest model)
@@ -47,9 +47,10 @@ namespace BooksStore.Api.Services
 				new Claim(ClaimTypes.GivenName, user.FirstName),
 				new Claim(ClaimTypes.Surname, user.LastName),
 				new Claim(ClaimTypes.Role, user.Role),
+				new Claim(ClaimTypes.Country, user.Country),
 			};
 
-			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("This key is to secure the access token"));
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("This key is to secure the access token, it doens't look like the best thing ever but let's see"));
 
 			var token = new JwtSecurityToken(
 				issuer: "booksstore.api",
@@ -62,5 +63,5 @@ namespace BooksStore.Api.Services
 		}
 	}
 
-	internal record User(Guid Id, string FirstName, string LastName, string Username, string Password, string Role);
+	internal record User(Guid Id, string FirstName, string LastName, string Username, string Password, string Role, string Country);
 }

@@ -25,10 +25,10 @@ builder.Services.AddAuthentication(auth =>
 	{
 		ValidateIssuer = true,
 		ValidateAudience = true,
-		ValidAudience = "booksstore.customers",
-		ValidIssuer = "booksstore.api",
+		ValidAudience = "https://booksstore-masteringblazorwebassembly.com",
+		ValidIssuer = "https://booksstore-masteringblazorwebassembly.com/api",
 		RequireExpirationTime = true,
-		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("This key is to secure the access token")),
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("This key is to secure the access token, it doens't look like the best thing ever but let's see")),
 		ValidateIssuerSigningKey = true
 	};
 });

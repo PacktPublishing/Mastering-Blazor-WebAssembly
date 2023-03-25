@@ -15,9 +15,9 @@ namespace BooksStore.Api.Controllers
 			_authService = authService;
 		}
 
-		[ProducesResponseType(200, Type = typeof(ApiSuccessResponse<LoginResponse>))]
+		[ProducesResponseType(200, Type = typeof(LoginResponse))]
         [ProducesResponseType(400, Type = typeof(ApiErrorResponse))]
-        [HttpPost("login")]
+        [HttpPost("login", Name = "Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
             var result = await _authService.LoginAsync(model); 
@@ -26,7 +26,7 @@ namespace BooksStore.Api.Controllers
 
         [ProducesResponseType(200, Type = typeof(ApiSuccessResponse<bool>))]
         [ProducesResponseType(400, Type = typeof(ApiErrorResponse))]
-        [HttpPost("register")]
+        [HttpPost("register", Name = "Register")]
         public Task<IActionResult> Register([FromBody] RegisterUserRequest model)
         {
             // Validate the model 

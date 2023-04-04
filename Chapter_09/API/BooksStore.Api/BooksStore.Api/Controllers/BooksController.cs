@@ -26,6 +26,16 @@ namespace BooksStore.Api.Controllers
             return Ok(result.ToArray());
         }
 
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Book>))]
+        [ProducesResponseType(400, Type = typeof(ApiErrorResponse))]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            // Validate the model 
+            var result = await _booksService.GetAllBooksAsync();
+            return Ok(result.ToArray());
+        }
+
         [ProducesResponseType(200, Type = typeof(Book))]
         [ProducesResponseType(400, Type = typeof(ApiErrorResponse))]
         [HttpPost()]

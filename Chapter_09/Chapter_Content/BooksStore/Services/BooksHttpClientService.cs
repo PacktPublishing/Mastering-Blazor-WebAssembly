@@ -34,9 +34,9 @@ public class BooksHttpClientService : IBooksService
 		}
 		else
 		{
-			var errorResposne = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+			var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
 			// Throw an exception with the error message for now
-			throw new Exception(errorResposne?.Message);
+			throw new Exception(errorResponse?.Message);
 			// TODO: Handle the error in Chapter 11
 		}
 	}
@@ -50,8 +50,8 @@ public class BooksHttpClientService : IBooksService
 		}
 		else
 		{
-			var errorResposne = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
-			throw new Exception(errorResposne?.Message);
+			var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+			throw new Exception(errorResponse?.Message);
 		}
 	}
 }

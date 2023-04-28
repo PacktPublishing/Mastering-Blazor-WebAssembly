@@ -1,0 +1,18 @@
+﻿.card {
+    margin: 7px;
+    padding: 7px;
+    box-shadow: 0px 3px 8px -3px rgb(0 0 0 / 75%);
+    border-radius: 3px;
+}
+
+.main-button {
+    background-color: #ec6611;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 4px;
+    margin: 4px;
+    font-size: 13px;
+    cursor: pointer;
+}

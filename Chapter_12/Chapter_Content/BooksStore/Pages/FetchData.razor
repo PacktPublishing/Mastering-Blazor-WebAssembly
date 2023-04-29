@@ -37,7 +37,7 @@ else
 			}
 		</tbody>
 	</table>
-
+@*
 	<table class="table">
 		<thead>
 			<tr>
@@ -58,6 +58,7 @@ else
 			
 		</tbody>
 	</table>
+	*@
 }
 
 @code {
@@ -78,14 +79,6 @@ else
 
 		public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 	}
-
-	private List<Customer> _customers = new();
-
-	public class Customer
-	{
-		public string? FirstName { get; set; }
-		public string? LastName { get; set; }
-		public string? Email { get; set; }
-	}
+	
 
 }

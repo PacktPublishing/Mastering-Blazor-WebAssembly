@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore", "BooksStore\Bo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Blazor.Components", "BooksStore.Blazor.Components\BooksStore.Blazor.Components.csproj", "{83AA75D9-2AA9-422C-80A5-0FD703534C66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksStore.Tests", "BooksStore.Tests\BooksStore.Tests.csproj", "{B9116D0D-77C6-4B55-A14F-A1E964671E43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksStore.Tests", "BooksStore.Tests\BooksStore.Tests.csproj", "{B9116D0D-77C6-4B55-A14F-A1E964671E43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

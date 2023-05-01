@@ -1,0 +1,32 @@
+﻿@using BooksStore.Pages.UserPages
+
+@inherits TestContext
+
+
+@code {
+
+	[Fact]
+	public void BookDetailsWithValidBookIdShouldRenderCorrectly()
+	{
+		// Arrange 
+		var mockedBookService = new Mock<IBooksService>();
+		mockedBookService
+		.Setup(x => x.GetBookByIdAsync(It.IsAny<string>()))
+		.Returns(Task.FromResult<Book?>(new Book
+			{
+				Id = Guid.NewGuid().ToString(),
+				Title = "Test Book",
+				AuthorName = "Test Author",
+				Description = "Test Description",
+				Price = 10
+			}));
+
+		Services.AddScoped<IBooksService>(sp => mockedBookService.Object);
+
+		var cut = Render(@<BookDetails BookId="1" />);
+
+		// Assert 
+		cut.Find("h2").MarkupMatches(@<h2>Test Book</h2>);
+	}
+
+}

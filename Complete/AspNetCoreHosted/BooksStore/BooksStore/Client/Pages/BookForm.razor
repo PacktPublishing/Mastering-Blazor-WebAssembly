@@ -1,0 +1,124 @@
+﻿@page "/book/form"
+@using BooksStore.Client.Components
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Authorization;
+@inject ILocalStorageService LocalStorage
+@inject IBooksService BooksService
+@inject NavigationManager NavigationManager
+@implements IDisposable
+@attribute [Authorize(Roles = "Admin")]
+@*@inject HttpClient Http*@
+
+<PageTitle>BooksStore | Add a new book</PageTitle>
+
+<div class="row">
+	<div class="col-6">
+		<h2>Add a new book</h2>
+		<EditForm Model="_book" OnValidSubmit="HandleBookFormSubmission">
+			<DataAnnotationsValidator />
+			@*<ValidationSummary />*@
+			<div class="form-group mt-1">
+				<label>Title</label>
+				@*<input type="text" @bind-value="@_book.Title" class="form-control" placeholder="Title" />*@
+				<InputText @bind-Value="@_book.Title" class="form-control" />
+				<ValidationMessage For="() => _book.Title" />
+			</div>
+			<div class="form-group mt-1">
+				<label>Description</label>
+				@*<input type="text" @bind-value="@_book.Description" class="form-control" placeholder="Description" />*@
+				<BlazorSimpleMde @ref="_simpleMde" Content="@_book?.Description" />
+				<ValidationMessage For="() => _book.Description" />
+			</div>
+			<div class="form-group mt-1">
+				<label>Number of pages</label>
+				@*<input type="number" @bind-value="@_book.PagesCount" class="form-control" placeholder="Number of pages" />*@
+				<InputNumber TValue="int" @bind-Value="@_book.PagesCount" class="form-control" />
+				<ValidationMessage For="() => _book.PagesCount" />
+			</div>
+			<div class="form-group mt-1">
+				<label>Author</label>
+				@*<input type="text" @bind-value="@_book.Author" class="form-control" placeholder="Author" />*@
+				<InputText @bind-Value="@_book.Author" class="form-control" placeholder="Author" />
+				<ValidationMessage For="() => _book.Author" />
+			</div>
+			<div class="form-group mt-1">
+				<label>Price</label>
+				@*<input type="number" @bind-value="@_book.Price" class="form-control" placeholder="Price" />*@
+				<InputNumber TValue="decimal" @bind-Value="@_book.Price" class="form-control" />
+				<ValidationMessage For="() => _book.Price" />
+			</div>
+
+			<div class="form-group mt-1">
+				<input type="submit" class="btn btn-success" value="Save" />
+			</div>
+		</EditForm>
+	</div>
+</div>
+
+
+@code
+{
+	private SubmitBook _book = new();
+	private TimeOnly _time = new TimeOnly(12, 30, 0);
+	private BlazorSimpleMde _simpleMde;
+	private async void HandleBookFormSubmission()
+	{
+		_book.Description = await _simpleMde.GetEditorValueAsync();
+
+		await BooksService.AddBookAsync(_book);
+		await ClearSavedStateAsync();
+		NavigationManager.NavigateTo("/");
+		//else
+		//{
+		//	var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+		//	Console.WriteLine(error);
+		// TODO: Handle the error
+		//}
+	}
+
+
+	protected async override Task OnInitializedAsync()
+	{
+		SetupTimer();
+		await CheckSavedStateAsync();
+	}
+
+	private async Task CheckSavedStateAsync()
+	{
+		if (await LocalStorage.ContainKeyAsync("book"))
+		{
+			_book = await LocalStorage.GetItemAsync<SubmitBook>("book");
+		}
+	}
+
+	private async Task SaveFormStateAsync()
+	{
+		// Read the description from the SimpleMDE editor
+		_book.Description = await _simpleMde.GetEditorValueAsync();
+		// SaveItemAsync takes a key which is the 'book' and the value to store, it will be serialized and stored as JSON object
+		await LocalStorage.SetItemAsync("book", _book);
+	}
+
+	private async Task ClearSavedStateAsync()
+	{
+		await LocalStorage.RemoveItemAsync("book");
+	}
+
+	private System.Timers.Timer _timer = new();
+	private void SetupTimer()
+	{
+		var second = 1000;
+		_timer.Interval = 10 * second;
+		_timer.Elapsed += async (sender, e) =>
+		{
+			await SaveFormStateAsync();
+		};
+		_timer.Start();
+	}
+
+	public void Dispose()
+	{
+		_timer.Stop();
+		_timer.Dispose();
+	}
+}

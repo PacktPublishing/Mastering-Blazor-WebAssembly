@@ -20,7 +20,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="Moq" Version="4.18.4" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -32,7 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BooksStore\BooksStore.csproj" />
+	  <ProjectReference Include="..\BooksStore\Client\BooksStore.Client.csproj" />
 	</ItemGroup>
 
 

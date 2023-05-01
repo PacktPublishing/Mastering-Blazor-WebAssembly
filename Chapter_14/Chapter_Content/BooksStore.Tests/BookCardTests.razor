@@ -1,0 +1,41 @@
+﻿@inherits TestContext 
+
+@code {
+
+	private Book _book = new Book()
+	{
+		Id = Guid.NewGuid().ToString(),
+		AuthorName = "Test Author",
+		Description = "Test Description",
+		Price = 10,
+		Title = "Test Book"
+	};
+
+	[Fact]
+	public void UserWithUK_CustomerPolicyShouldSeeAddToCartButton()
+	{
+		// Arrange 
+		var authContext = this.AddTestAuthorization();
+		authContext.SetPolicies("UK_Customer");
+
+		var cut = Render(@<BookCard Book="_book" />);
+
+		// Assert 
+		cut.Find("button").MarkupMatches(@<button class="main-button">Add to Cart</button>);
+	}
+
+	[Fact]
+	public void UsersWithoutUK_CustomersPolicyShouldNotSeeAddToCartButton()
+	{
+		this.AddTestAuthorization();
+		// Arrange
+		var cut = Render(@<BookCard Book="_book" />);
+		var buttons = cut.FindAll("button");
+
+		// Assert
+		Assert.Empty(buttons);
+		cut.Find("p.text-center").MarkupMatches(@<p class="text-center">Books only available for sale in UK for the time being</p>);
+	}
+
+
+}

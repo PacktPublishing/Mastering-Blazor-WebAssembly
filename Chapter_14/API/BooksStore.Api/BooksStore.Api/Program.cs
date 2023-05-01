@@ -1,6 +1,6 @@
-using BooksStore.Server.Interfaces;
-using BooksStore.Server.Middleware;
-using BooksStore.Server.Services;
+using BooksStore.Api.Interfaces;
+using BooksStore.Api.Middleware;
+using BooksStore.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
@@ -36,6 +36,13 @@ builder.Services.AddAuthentication(auth =>
 
 var app = builder.Build();
 
+app.UseCors(policy =>
+{
+    policy
+       .AllowAnyHeader()
+       .AllowAnyOrigin()
+       .AllowAnyMethod();
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

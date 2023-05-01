@@ -1,0 +1,46 @@
+﻿
+@if (IsOpen)
+{
+	<div class="overlay">
+		<div class="modal-box">
+			<div class="modal-header">
+				<h4>@Title</h4>
+
+				<span class="close-button" @onclick="CloseModal">X</span>
+			</div>
+
+			<div class="modal-body">
+				@ChildContent
+			</div>
+
+			<div class="modal-footer">
+				@FooterContent
+			</div>
+		</div>
+	</div>
+}
+
+@code
+{
+
+	[Parameter]
+	public string? Title { get; set; }
+
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	[Parameter]
+	public RenderFragment? FooterContent { get; set; }
+
+	[Parameter]
+	public bool IsOpen { get; set; }
+
+	[Parameter]
+	public EventCallback OnCloseClicked { get; set; }
+
+	private void CloseModal()
+	{
+		IsOpen = false;
+		OnCloseClicked.InvokeAsync();
+	}
+}

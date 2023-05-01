@@ -1,0 +1,72 @@
+﻿
+@inject IJSRuntime JSRuntime
+@inject AppStateContainer AppStateContainer
+@implements IDisposable
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">BooksStore</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<NavLink class="nav-link" href="/">Home</NavLink>
+				</li>
+				<li class="nav-item">
+					<NavLink class="nav-link" href="/Counter">Counter (@currentCount)</NavLink>
+				</li>
+				<li class="nav-item">
+					<NavLink class="nav-link" href="/FetchData">Fetch Data</NavLink>
+				</li>
+				<AuthorizeView Roles="Admin">
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/Book/Form">Add Book</NavLink>
+					</li>
+				</AuthorizeView>
+
+			</ul>
+		</div>
+		<div class="d-flex">
+			<LoginDisplay />
+		</div>
+	</div>
+</nav>
+
+@code
+{
+
+	protected override void OnInitialized()
+	{
+		// Set the initial value of the currentState variable to the value from the AppStateContainer
+		currentCount = AppStateContainer.CurrentCounter;
+		// Subscribe to the OnCounterChanged delegate and assign the OnCounterChanged method to it
+		AppStateContainer.OnCounterChanged += OnCounterChanged;
+	}
+
+	private int currentCount = 0;
+	private void OnCounterChanged(int newCounter)
+	{
+		currentCount = newCounter;
+		StateHasChanged();
+	}
+
+	public void Dispose()
+	{
+		AppStateContainer.OnCounterChanged -= OnCounterChanged;
+	}
+
+
+	private async Task ShowAlertAsync()
+	{
+		var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./site.js");
+		await module.InvokeVoidAsync("showAlert", "Unkown user");
+	}
+
+
+	private void ShowAlert()
+	{
+		var jsInProcess = (IJSInProcessRuntime)JSRuntime;
+		jsInProcess.InvokeVoid("showAlert", "Unkown user");
+	}
+}

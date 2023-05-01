@@ -1,5 +1,5 @@
-using BooksStore.Client;
-using BooksStore.Client.Services;
+using BooksStore;
+using BooksStore.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.LocalStorage;
@@ -11,7 +11,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<AuthorizationMessageHandler>();
-builder.Services.AddHttpClient("BooksStore.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+builder.Services.AddHttpClient("BooksStore.ServerAPI", client => client.BaseAddress = new Uri(builder.Configuration["ApiUrl"]))
 	.AddHttpMessageHandler<AuthorizationMessageHandler>();
 
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("BooksStore.ServerAPI")); 

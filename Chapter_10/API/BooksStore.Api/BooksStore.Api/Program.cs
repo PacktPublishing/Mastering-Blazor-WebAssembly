@@ -1,4 +1,5 @@
 using BooksStore.Api.Interfaces;
+using BooksStore.Api.Middleware;
 using BooksStore.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -48,7 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

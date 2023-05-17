@@ -70,11 +70,30 @@
 		// Fetch data from the API
 	}
 
+
+	private string _oldBookId = string.Empty;
+	private bool _shouldRerender = false;
+
 	// Validate the Book parameter and throws an exception if it's null
 	protected override void OnParametersSet()
 	{
 		if (Book == null)
 			throw new ArgumentNullException(nameof(Book));
+
+		if (Book.Id.Equals(_oldBookId))
+		{
+			_oldBookId = Book.Id;
+			_shouldRerender = true;
+		}
+		else
+		{
+			_shouldRerender = false;
+		}
+	}
+
+	protected override bool ShouldRender()
+	{
+		return _shouldRerender;
 	}
 
 	protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -91,6 +110,11 @@
 	{
 		var url = $"/book/{Book.Id}";
 		Navigation.NavigateTo(url);
+	}
 
+
+	protected override void OnAfterRender(bool firstRender)
+	{
+		Console.WriteLine($"BookCard rendered for book '{Book.Title}'");
 	}
 }

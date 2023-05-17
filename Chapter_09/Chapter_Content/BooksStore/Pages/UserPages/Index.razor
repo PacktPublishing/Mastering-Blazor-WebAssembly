@@ -49,6 +49,9 @@ Welcome to our Books Store new app.
 	[SupplyParameterFromQuery(Name = "pageNumber")]
 	public int PageNumber { get; set; }
 
+	[CascadingParameter]
+	public Task<AuthenticationState> AuthenticationState { get; set; }
+
 	private bool _isWelcomeModalOpen = true;
 
 	private List<Book>? _books = null;
@@ -69,8 +72,13 @@ Welcome to our Books Store new app.
 		Navigation.LocationChanged += Navigation_LocationChanged;
 		_books = await BooksService.GetAllBooksAsync();
 		//_books = await GetBooksAsync();
-	}
 
+		var authState = await AuthenticationState;
+		if (authState.User.Identity.IsAuthenticated)
+		{
+			// Execute logic if the user is authenticated
+		}
+	}
 	//private async Task<List<Book>?> GetBooksAsync()
 	//{
 	//	var response = await Http.GetAsync("books");
@@ -80,9 +88,9 @@ Welcome to our Books Store new app.
 	//	}
 	//	else
 	//	{
-	//		var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+	//		var errorResposne = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
 	//		// Throw an exception with the error message for now
-	//		throw new Exception(errorResponse?.Message);
+	//		throw new Exception(errorResposne?.Message);
 	//		// TODO: Handle the error in Chapter 11
 	//	}
 	//}

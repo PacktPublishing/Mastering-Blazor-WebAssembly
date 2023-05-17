@@ -11,22 +11,24 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Increment Count</button>
 @code {
 
-    [Parameter]
-    [SupplyParameterFromQuery(Name = "currentCount")]
-    public int? CounterInitialValue { get; set; }
+	[Parameter]
+	[SupplyParameterFromQuery(Name = "currentCount")]
+	public int? CounterInitialValue { get; set; }
 
-    private int currentCount = 0;
+	private int currentCount = 0;
 
-    protected override void OnParametersSet()
-    {
-        if (CounterInitialValue != null)
-            currentCount = CounterInitialValue.Value;
-    }
+	protected override void OnParametersSet()
+	{
+		if (CounterInitialValue != null)
+			currentCount = CounterInitialValue.Value;
+	}
 
-    private void IncrementCount()
-    {
-        currentCount++;
-        AppStateContainer.UpdateCounter(currentCount);
-    }
+	private void IncrementCount()
+	{
+		currentCount++;
+		if (currentCount > 5)
+			throw new Exception("Counter value must not exceed the value of 5");
+		AppStateContainer.UpdateCounter(currentCount);
+	}
 
 }

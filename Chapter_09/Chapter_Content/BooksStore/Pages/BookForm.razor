@@ -1,10 +1,12 @@
 ﻿@page "/book/form"
 @using BooksStore.Blazor.Components
 @using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Authorization;
 @inject ILocalStorageService LocalStorage
 @inject IBooksService BooksService
 @inject NavigationManager NavigationManager
 @implements IDisposable
+@attribute [Authorize(Roles = "Admin")]
 @*@inject HttpClient Http*@
 
 <PageTitle>BooksStore | Add a new book</PageTitle>

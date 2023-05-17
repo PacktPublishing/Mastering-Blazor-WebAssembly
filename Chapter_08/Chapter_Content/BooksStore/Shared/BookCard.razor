@@ -1,0 +1,89 @@
+﻿@inject NavigationManager Navigation
+
+<div style="@BackgroundStyle" @attributes="UserAttributes"
+	 class="card"
+	 @onclick="NavigateToBookDetails">
+	<h6>@Book?.Title</h6>
+	<p>Author: @Book?.AuthorName</p>
+	<p>Publishing date: @Book?.PublishingDate</p>
+
+	@if (WithButton)
+	{
+		<button class="main-button" @onclick="AddToCart">Add to Cart</button>
+	}
+</div>
+
+<style>
+	.main-button:hover {
+		background-color: #c7540c
+	}
+</style>
+
+@code
+{
+
+	[CascadingParameter(Name = "BackgroundStyle")]
+	public string? BackgroundStyle { get; set; }
+
+	[CascadingParameter(Name = "ButtonStyle")]
+	public string? ButtonStyle { get; set; }
+
+	[CascadingParameter]
+	public bool IsBusy { get; set; }
+
+	[Parameter(CaptureUnmatchedValues = true)]
+	public Dictionary<string, object>? UserAttributes { get; set; }
+
+	[Parameter]
+	public Book? Book { get; set; }
+
+	[Parameter]
+	public bool WithButton { get; set; } = true;
+
+	[Parameter]
+	public EventCallback<Book?> OnAddToCartClicked { get; set; }
+
+	// Override the SetParametersAsync to control the process of setting the parameters
+	// using the ParameterView object that holds the values of the component parameters
+	public override async Task SetParametersAsync(ParameterView parameters)
+	{
+		if (parameters.TryGetValue<string>(nameof(BackgroundStyle), out var value))
+		{
+			if (string.IsNullOrWhiteSpace(value))
+			{
+				BackgroundStyle = "background-color:white";
+			}
+		}
+
+		await base.SetParametersAsync(parameters);
+	}
+
+	protected async override Task OnInitializedAsync()
+	{
+		// Fetch data from the API
+	}
+
+	// Validate the Book parameter and throws an exception if it's null
+	protected override void OnParametersSet()
+	{
+		if (Book == null)
+			throw new ArgumentNullException(nameof(Book));
+	}
+
+	protected async override Task OnAfterRenderAsync(bool firstRender)
+	{
+		// Make a JavaScript call to manipulate the DOM elements
+	}
+
+	private void AddToCart()
+	{
+		OnAddToCartClicked.InvokeAsync(Book);
+	}
+
+	private void NavigateToBookDetails()
+	{
+		var url = $"/book/{Book.Id}";
+		Navigation.NavigateTo(url);
+		
+	}
+}

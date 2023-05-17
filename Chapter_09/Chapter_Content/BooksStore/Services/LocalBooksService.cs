@@ -36,12 +36,12 @@ namespace BooksStore.Services
                  }
         };
 
-        public Task AddBookAsync(SubmitBook book)
-        {
-            throw new NotImplementedException();
-        }
+		public Task AddBookAsync(SubmitBook book)
+		{
+			throw new NotImplementedException();
+		}
 
-        public Task<List<Book>> GetAllBooksAsync()
+		public Task<List<Book>> GetAllBooksAsync()
         {
             return Task.FromResult(_allBooks);
         }

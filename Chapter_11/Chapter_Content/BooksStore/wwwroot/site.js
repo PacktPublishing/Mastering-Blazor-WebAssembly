@@ -17,3 +17,13 @@ function triggerOnWindowResized(dotnetObjRef) {
         dotnetObjRef.invokeMethodAsync('OnWindowResized', window.innerWidth, window.innerHeight);
     }
 }
+
+function exportInvoicesCollectionAsPdf(invoices) {
+    invoices.forEach(invoice => {
+        exportInvoiceAsPdf(invoice);
+    });
+}
+
+function exportInvoiceAsPdf(invoice) {
+    // Logic to export the invoice as PDF
+}

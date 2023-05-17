@@ -1,4 +1,5 @@
-﻿using BooksStore.Api.Interfaces;
+﻿using BooksStore.Api.Exceptions;
+using BooksStore.Api.Interfaces;
 using BooksStore.Api.Models;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.IdentityModel.Tokens;
@@ -27,7 +28,7 @@ namespace BooksStore.Api.Services
 			var user = _users.FirstOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 			if (user == null)
 			{
-				throw new Exception("Invalid username or password");
+				throw new DomainException("Invalid username or password");
 			}
 
 			var token = GenerateJwtToken(user);

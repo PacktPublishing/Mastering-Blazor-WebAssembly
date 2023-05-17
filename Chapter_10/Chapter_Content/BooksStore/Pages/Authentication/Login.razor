@@ -1,6 +1,7 @@
 ﻿@page "/authentication/login"
 @layout UserLayout
 @using Blazored.LocalStorage
+@using BooksStore.Exceptions;
 @using Microsoft.AspNetCore.Components.Authorization;
 @inject IAuthenticationService AuthService
 @inject ILocalStorageService LocalStorage 
@@ -27,6 +28,13 @@
 			</div>
 			
 			<button type="submit" class="btn btn-primary">Login</button>
+
+			@if (!string.IsNullOrWhiteSpace(_errorMessage))
+			{
+				<div class="alert alert-danger my-2">
+					@_errorMessage
+				</div>				
+			}
 		</EditForm>
 	</div>
 </div>
@@ -34,10 +42,15 @@
 
 @code {
 
+	[CascadingParameter]
+	public ErrorHandler ErrorHandler { get; set; }
+
 	private LoginRequest _model = new();
+	private string _errorMessage = string.Empty;
 
 	private async Task SubmitLoginFormAsync()
 	{
+		_errorMessage = string.Empty;
 		try
 		{
 			// Based on the logic of the method, if the request to the API fails,
@@ -49,10 +62,13 @@
 			await AuthStateProvider.GetAuthenticationStateAsync(); 
 			Navigation.NavigateTo("/");
 		}
+		catch (ApiResponseException ex)
+		{
+			_errorMessage = ex.Message;
+		}
 		catch (Exception ex)
 		{
-			// TODO: Log the error in Chapter 11
-			Console.WriteLine(ex.Message);
+			await ErrorHandler.HandleExceptionAsync(ex);
 		}
 	}
 

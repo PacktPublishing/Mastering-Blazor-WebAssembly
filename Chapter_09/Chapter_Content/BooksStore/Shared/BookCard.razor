@@ -2,14 +2,21 @@
 
 <div style="@BackgroundStyle" @attributes="UserAttributes"
 	 class="card"
-	 @onclick="NavigateToBookDetails">
+@onclick="NavigateToBookDetails">
 	<h6>@Book?.Title</h6>
 	<p>Author: @Book?.AuthorName</p>
 	<p>Publishing date: @Book?.PublishingDate</p>
 
 	@if (WithButton)
 	{
-		<button class="main-button" @onclick="AddToCart">Add to Cart</button>
+		<AuthorizeView Policy="UK_Customer">
+			<Authorized>
+				<button class="main-button" @onclick="AddToCart">Add to Cart</button>
+			</Authorized>
+			<NotAuthorized>
+				<p class="text-center">Books only available for sale in UK for the time being</p>
+			</NotAuthorized>
+		</AuthorizeView>
 	}
 </div>
 
@@ -84,6 +91,6 @@
 	{
 		var url = $"/book/{Book.Id}";
 		Navigation.NavigateTo(url);
-		
+
 	}
 }

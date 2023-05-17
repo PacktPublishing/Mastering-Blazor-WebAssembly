@@ -1,0 +1,59 @@
+﻿@page "/authentication/login"
+@layout UserLayout
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Components.Authorization;
+@inject IAuthenticationService AuthService
+@inject ILocalStorageService LocalStorage 
+@inject NavigationManager Navigation 
+@inject AuthenticationStateProvider AuthStateProvider 
+
+<PageTitle>Login to BooksStore</PageTitle>
+
+<h2>Welcome to BooksStore!</h2>
+<div class="row">
+	<div class="col-sm-12 col-md-4">
+		<EditForm Model="_model" OnValidSubmit="SubmitLoginFormAsync">
+			<DataAnnotationsValidator />
+			<div class="mb-3">
+				<label>Username</label>
+				<InputText @bind-Value="@_model.Username" class="form-control" />
+				<ValidationMessage For="@(() => _model.Username)" />
+			</div>
+
+			<div class="mb-3">
+				<label>Password</label>
+				<InputText type="password" @bind-Value="@_model.Password" class="form-control" />
+				<ValidationMessage For="@(() => _model.Password)" />
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Login</button>
+		</EditForm>
+	</div>
+</div>
+
+
+@code {
+
+	private LoginRequest _model = new();
+
+	private async Task SubmitLoginFormAsync()
+	{
+		try
+		{
+			// Based on the logic of the method, if the request to the API fails,
+			// it will throw an exception, otherwise it will return the token.
+			var loginResult = await AuthService.LoginUserAsync(_model);
+
+			// Store the token in the local storage 
+			await LocalStorage.SetItemAsync("access_token", loginResult.AccessToken);
+			await AuthStateProvider.GetAuthenticationStateAsync(); 
+			Navigation.NavigateTo("/");
+		}
+		catch (Exception ex)
+		{
+			// TODO: Log the error in Chapter 11
+			Console.WriteLine(ex.Message);
+		}
+	}
+
+}

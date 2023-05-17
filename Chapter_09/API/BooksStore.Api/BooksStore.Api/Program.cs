@@ -1,4 +1,9 @@
+using BooksStore.Api.Interfaces;
 using BooksStore.Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Net;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +14,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<BooksService>();
+builder.Services.AddScoped<IAuthenticationService, LocalAuthenticationService>();
+builder.Services.AddAuthentication(auth =>
+{
+	auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+	options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+	{
+		ValidateIssuer = true,
+		ValidateAudience = true,
+		ValidAudience = "https://booksstore-masteringblazorwebassembly.com",
+		ValidIssuer = "https://booksstore-masteringblazorwebassembly.com/api",
+		RequireExpirationTime = true,
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("This key is to secure the access token, it doens't look like the best thing ever but let's see")),
+		ValidateIssuerSigningKey = true
+	};
+});
 
 var app = builder.Build();
 

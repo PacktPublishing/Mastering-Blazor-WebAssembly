@@ -9,7 +9,6 @@
   <ItemGroup>
     <None Include="Pages\Counter.razor" />
     <None Include="Pages\FetchData.razor" />
-    <None Include="Pages\Index.razor" />
     <None Include="Shared\MainLayout.razor" />
     <None Include="Shared\NavMenu.razor" />
     <None Include="Shared\SurveyPrompt.razor" />

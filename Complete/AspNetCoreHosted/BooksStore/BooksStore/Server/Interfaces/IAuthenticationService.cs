@@ -1,4 +1,5 @@
 ﻿using BooksStore.Server.Models;
+using BooksStore.Shared.Models;
 
 namespace BooksStore.Server.Interfaces
 {
@@ -6,6 +7,8 @@ namespace BooksStore.Server.Interfaces
 	{
 
 		Task<LoginResponse> LoginAsync(LoginRequest model);
+
+		Task RegisterAsync(RegisterUserRequest model);
 
 	}
 }

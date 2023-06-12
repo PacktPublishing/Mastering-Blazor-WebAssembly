@@ -39,6 +39,21 @@ namespace BooksStore.Server.Services
 			});
 		}
 
+		public Task RegisterAsync(RegisterUserRequest model)
+		{
+			ArgumentNullException.ThrowIfNull(model);
+
+			var user = _users.FirstOrDefault(x => x.Username == model.Username);
+			if (user != null)
+			{
+				throw new DomainException("Username already exists");
+			}
+
+			_users.Add(new User(Guid.NewGuid(), model.FirstName, model.LastName, model.Username, model.Password, "Customer", model.Country));
+			return Task.CompletedTask; 
+		}
+
+
 		private string GenerateJwtToken(User user)
 		{
 			var claims = new[]
@@ -63,6 +78,6 @@ namespace BooksStore.Server.Services
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 	}
-
+	 
 	internal record User(Guid Id, string FirstName, string LastName, string Username, string Password, string Role, string Country);
 }

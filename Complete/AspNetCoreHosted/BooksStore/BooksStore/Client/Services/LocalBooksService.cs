@@ -41,6 +41,11 @@ namespace BooksStore.Client.Services
 			throw new NotImplementedException();
 		}
 
+		public Task AddReviewAsync(string bookId, AddBookReviewRequest review)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Task<List<Book>> GetAllBooksAsync()
         {
             return Task.FromResult(_allBooks);
@@ -51,5 +56,10 @@ namespace BooksStore.Client.Services
             var book = _allBooks.SingleOrDefault(b => b.Id == id);
             return Task.FromResult(book);
         }
-    }
+
+		public Task UploadBookCoverAsync(string bookId, Stream stream, string fileName)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

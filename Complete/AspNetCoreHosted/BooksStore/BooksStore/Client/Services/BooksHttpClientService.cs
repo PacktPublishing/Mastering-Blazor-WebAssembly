@@ -1,6 +1,8 @@
 ﻿using BooksStore.Client.Models;
 using Microsoft.AspNetCore.Components;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using static System.Net.WebRequestMethods;
 
 namespace BooksStore.Client.Services;
@@ -34,24 +36,53 @@ public class BooksHttpClientService : IBooksService
 		}
 		else
 		{
-			var errorResposne = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+			var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
 			// Throw an exception with the error message for now
-			throw new Exception(errorResposne?.Message);
+			throw new Exception(errorResponse?.Message);
 			// TODO: Handle the error in Chapter 11
 		}
 	}
 
 	public async Task<Book?> GetBookByIdAsync(string? id)
 	{
-		var response = await _httpClient.GetAsync($"books/{id}");
+		var response = await _httpClient.GetAsync($"/books/{id}");
+		Console.WriteLine(await response.Content.ReadAsStringAsync());
 		if (response.IsSuccessStatusCode) // if response status code is 2XX
 		{
 			return await response.Content.ReadFromJsonAsync<Book>();
 		}
 		else
 		{
-			var errorResposne = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
-			throw new Exception(errorResposne?.Message);
+			var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+			throw new Exception(errorResponse?.Message);
+		}
+	}
+
+	public async Task AddReviewAsync(string bookId, AddBookReviewRequest review)
+	{
+		var response = await _httpClient.PostAsJsonAsync($"books/review/{bookId}", review);
+		if (!response.IsSuccessStatusCode)
+		{
+			var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+			Console.WriteLine(error);
+		}
+	}
+
+	public async Task UploadBookCoverAsync(string bookId, Stream stream, string fileName)
+	{
+		var content = new MultipartFormDataContent();
+		var fileContent = new StreamContent(stream);
+		fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+		{
+			Name = "file",
+			FileName = fileName
+		};
+		content.Add(fileContent);
+		var response = await _httpClient.PostAsync($"/books/{bookId}/cover", content);
+		if (!response.IsSuccessStatusCode)
+		{
+			var error = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+			Console.WriteLine(error);
 		}
 	}
 }

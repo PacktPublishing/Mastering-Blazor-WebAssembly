@@ -1,5 +1,6 @@
 ﻿using BooksStore.Server.Interfaces;
 using BooksStore.Server.Models;
+using BooksStore.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksStore.Server.Controllers
@@ -27,10 +28,11 @@ namespace BooksStore.Server.Controllers
         [ProducesResponseType(200, Type = typeof(ApiSuccessResponse<bool>))]
         [ProducesResponseType(400, Type = typeof(ApiErrorResponse))]
         [HttpPost("register", Name = "Register")]
-        public Task<IActionResult> Register([FromBody] RegisterUserRequest model)
+        public async Task<IActionResult> Register([FromBody] RegisterUserRequest model)
         {
             // Validate the model 
-            return Task.FromResult<IActionResult>(Ok(new ApiSuccessResponse<bool>()));
+            await _authService.RegisterAsync(model);
+            return Ok(new ApiSuccessResponse<bool>());
         }
 
     }

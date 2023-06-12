@@ -1,0 +1,72 @@
+﻿@page "/book/{id}/upload-cover"
+@inject IBooksService BooksService
+@inject NavigationManager Navigation
+@attribute [Authorize(Roles = "Admin")]
+
+<h3>Upload Book Cover</h3>
+@if (_book?.CoverImageUrl != null)
+{
+	<img class="cover" src="@_book.CoverImageUrl" />
+}
+
+<div class="my-3">
+	<InputFile OnChange="ChooseFile" />
+	<button class="btn btn-upload" @onclick="UploadCoverAsync">Upload</button>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(_errorMessage))
+{
+	<div class="alert alert-danger">
+		@_errorMessage
+	</div>
+}
+
+@code {
+
+	[Parameter]
+	public string Id { get; set; } = string.Empty;
+
+	[CascadingParameter]
+	public ErrorHandler? ErrorHandler { get; set; }
+
+	private Book? _book;
+	private IBrowserFile? _browserFile;
+	private string _errorMessage = string.Empty;
+	private bool _isBusy = false;
+	protected override async Task OnInitializedAsync()
+	{
+		_book = await BooksService.GetBookByIdAsync(Id);
+	}
+
+	private void ChooseFile(InputFileChangeEventArgs e)
+	{
+		if (e.File == null)
+			return;
+		var path = Path.GetExtension(e.File.Name).ToLower();
+		if (path != ".jpg" && path != ".png" && path != ".jpeg")
+		{
+			_errorMessage = "Invalid file type. Please upload a jpg, png or jpeg file.";
+			return;
+		}
+		_browserFile = e.File;
+	}
+
+	private async Task UploadCoverAsync()
+	{
+		if (_browserFile == null)
+			return; 
+		_isBusy = true;
+		try
+		{
+			using var stream = _browserFile?.OpenReadStream();
+			await BooksService.UploadBookCoverAsync(Id, stream!, _browserFile.Name);
+			Navigation.NavigateTo($"/book/{Id}");
+		}
+		catch (Exception ex)
+		{
+			await ErrorHandler?.HandleExceptionAsync(ex);
+		}
+		_isBusy = false; 
+	}
+
+}

@@ -1,0 +1,48 @@
+﻿@inject IBooksService BooksService
+<h3>Submit your review</h3>
+<EditForm Model="_model" OnValidSubmit="SubmitRatingAsync">
+	<DataAnnotationsValidator />
+	<div class="mb-3">
+		<label>Rating</label>
+		<Rating @bind-StarCount="_model.Rating" />
+	</div>
+
+	<div class="mb-3">
+		<label>Comment</label>
+		<InputTextArea @bind-Value="@_model.Description" class="form-control" />
+		<ValidationMessage For="@(() => _model.Description)" />
+	</div>
+
+	<button type="submit" class="btn btn-primary" disabled="@_isBusy">Submit</button>
+</EditForm>
+
+@code {
+
+	[Parameter]
+	public string BookId { get; set; } = string.Empty; 
+
+	[Parameter]
+	public EventCallback OnRatingSubmitted { get; set; }
+
+	[CascadingParameter]
+	public ErrorHandler? ErrorHandler { get; set; }
+
+	private bool _isBusy = false;
+	private int _rating = 1;
+	private AddBookReviewRequest _model = new(); 
+
+	private async Task SubmitRatingAsync()
+	{
+		_isBusy = true;
+		try
+		{
+			await BooksService.AddReviewAsync(BookId, _model);
+			await OnRatingSubmitted.InvokeAsync();
+		}
+		catch (Exception ex)
+		{
+			await ErrorHandler?.HandleExceptionAsync(ex);
+		}
+		_isBusy = false; 
+	}
+}

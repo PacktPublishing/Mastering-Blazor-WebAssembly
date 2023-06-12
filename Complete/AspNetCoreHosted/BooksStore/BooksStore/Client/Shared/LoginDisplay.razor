@@ -13,7 +13,11 @@
 	</Authorized>
 	<NotAuthorized>
 		@* Render the content if the user is not logged in *@
+		<div class="d-flex">
+		<a class="btn btn-outline-primary mr-2" href="/authentication/register">Register</a>
+
 		<a class="btn btn-outline-primary" href="/authentication/login">Login</a>
+		</div>
 	</NotAuthorized>
 </AuthorizeView>
 

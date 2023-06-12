@@ -20,4 +20,16 @@ public class Book
     public string? Id { get; set; }
     [JsonPropertyName("pagesCount")]
     public int PagesCount { get; set; }
+
+    [JsonPropertyName("reviews")]
+    public List<BookReview>? Reviews { get; set; }
+}
+
+public class BookReview
+{
+
+    public string? Description { get; set; }
+
+    public int Rating { get; set; }
+
 }

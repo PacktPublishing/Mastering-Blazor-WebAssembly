@@ -1,4 +1,5 @@
 ﻿using BooksStore.Client.Models;
+using BooksStore.Shared.Models;
 
 namespace BooksStore.Client.Exceptions;
 

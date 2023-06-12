@@ -1,16 +1,52 @@
 ﻿@page "/book/{bookId}"
-@inject IBooksService BooksService 
+@inject IBooksService BooksService
 
 <PageTitle>Book Details | @_book?.Title</PageTitle>
 
-<h2>@_book?.Title</h2>
-<p>@_book?.Description</p>
-<ul>
-	<li>Price: $@_book?.Price</li>
-	<li>Pages: @_book?.PagesCount</li>
-	<li>Author: @_book?.AuthorName</li>
-	<li>Publishing date: @_book?.PublishingDate</li>
-</ul>
+<AuthorizeView Roles="Admin">
+	<a href="/book/@BookId/upload-cover" class="btn btn-success">Upload Cover</a>
+</AuthorizeView>
+
+<div class="row">
+	<div class="col-lg-4 col-sm-12 col-md-6">
+		<img src="@_book?.CoverImageUrl" class="cover" />
+	</div>
+	<div class="col-lg-8 col-sm-12 col-md-6">
+		<h2>@_book?.Title</h2>
+		<p>@_book?.Description</p>
+		<ul>
+			<li>Price: $@_book?.Price</li>
+			<li>Pages: @_book?.PagesCount</li>
+			<li>Author: @_book?.AuthorName</li>
+			<li>Publishing date: @_book?.PublishingDate</li>
+		</ul>
+
+	</div>
+</div>
+
+<hr />
+<div class="row">
+	<div class="col-lg-4 col-sm-12 col-md-6">
+		<BookRatingForm OnRatingSubmitted="LoadBookAsync" BookId="@BookId" />
+		<hr />
+		<h3>Ratings and reviews</h3>
+		@if (_book?.Reviews != null && _book.Reviews.Any())
+		{
+			@foreach (var review in _book.Reviews)
+			{
+				<div class="mb-3">
+					<Rating StarCount="review.Rating" IsReadOnly="true" />
+					<p class="mt-2">@review.Description</p>
+					<hr />
+				</div>
+			}
+		}
+		else
+		{
+			<p>No reviews available yet!</p>
+		}
+	</div>
+</div>
 
 @code
 {
@@ -26,8 +62,12 @@
 
 	protected async override Task OnInitializedAsync()
 	{
+		await LoadBookAsync();
+	}
+
+	private async Task LoadBookAsync()
+	{
 		_book = await BooksService.GetBookByIdAsync(BookId);
 	}
 
-	
 }

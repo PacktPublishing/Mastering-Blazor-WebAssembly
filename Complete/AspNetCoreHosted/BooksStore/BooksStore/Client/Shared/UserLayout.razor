@@ -3,7 +3,7 @@
 <NavBar />
 
 <main class="px-5 py-4">
-	<ErrorBoundary @ref="_errorBoundary">
+@* 	<ErrorBoundary @ref="_errorBoundary">
 		<ChildContent>
 			@Body
 		</ChildContent>
@@ -11,12 +11,11 @@
 			<h3>Counter must not exceed the value 5</h3>
 			<button class="btn btn-primary" @onclick="() => _errorBoundary.Recover()">Reload</button>
 		</ErrorContent>
-	</ErrorBoundary>
-	
+	</ErrorBoundary> *@
+	@Body
 </main>
 
 @code
 {
-	private ErrorBoundary _errorBoundary; 
 
 }

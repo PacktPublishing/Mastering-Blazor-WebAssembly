@@ -11,7 +11,7 @@ public class AuthenticationService : IAuthenticationService
 
 	// Inject the HttpClient into the constructor
 	private readonly HttpClient _httpClient;
-
+	private readonly ILogger<AuthenticationService> _logger;
 	public AuthenticationService(HttpClient httpClient)
 	{
 		_httpClient = httpClient;
@@ -32,6 +32,8 @@ public class AuthenticationService : IAuthenticationService
 		}
 		else
 		{
+			var content = await response.Content.ReadAsStringAsync();
+			_logger.LogError($"Failed to log the user in. Status code {response.StatusCode}", content);
 			// Throw exception for other failure responses 
 			throw new Exception("Opps! Something went wrong");
 		}

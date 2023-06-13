@@ -20,6 +20,7 @@ namespace BooksStore.Server.Services
                      Title = "Blazor WebAssembly Guide",
                      Price = 45,
                      PagesCount = 300,
+                     CoverImageUrl = "/images/no-cover-available.png"
                  },
                  new Book
                  {
@@ -29,7 +30,8 @@ namespace BooksStore.Server.Services
                      Title = "Mastering Blazor WebAssembly",
                      Price = 35,
                      PagesCount = 200,
-                 },
+					 CoverImageUrl = "/images/no-cover-available.png"
+				 },
                  new Book
                  {
                      Id = "e6c0d89c-3767-4aea-a61d-2e1260c2004a",
@@ -38,7 +40,8 @@ namespace BooksStore.Server.Services
                      Title = "Learning Blazor from A to Z",
                      Price = 40,
                      PagesCount = 250,
-                 }
+					 CoverImageUrl = "/images/no-cover-available.png"
+				 }
         };
 
 		public BooksService(IWebHostEnvironment env)

@@ -34,8 +34,7 @@
 
 		// Assert
 		Assert.Empty(buttons);
-		var textContent = cut.Find("p.text-center").TextContent;
-		Assert.Equal("Books only available for sale in UK for the time being", textContent);
+		cut.Find("p.text-center").MarkupMatches(@<p class="text-center">Books only available for sale in UK for the time being</p>);
 	}
 
 

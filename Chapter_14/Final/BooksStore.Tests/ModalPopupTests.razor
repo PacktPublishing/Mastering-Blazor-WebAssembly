@@ -8,7 +8,7 @@
 		// Arrange
 		var isOpen = true;
 		var cut = Render(@<ModalPopup IsOpen="isOpen" />);
-		
+
 		// Assert
 		var overlayDivs = cut.FindAll(".overlay"); 
 		Assert.True(overlayDivs.Count > 0);

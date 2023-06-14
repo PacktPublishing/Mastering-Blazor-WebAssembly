@@ -1,0 +1,32 @@
+﻿
+@inject IJSRuntime JS
+@inject ILogger<ErrorHandler> Logger
+<CascadingValue Value="this" IsFixed="true">
+	@ChildContent
+</CascadingValue>
+@code {
+
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+
+	private async Task ShowAlertAsync(string message)
+	{
+		await JS.InvokeVoidAsync("alert", message);
+	}
+
+	public async Task HandleExceptionAsync(Exception ex)
+	{
+		Logger.LogError(ex, ex.Message);
+		switch (ex)
+		{
+			// TODO: Handle more specific exception 
+			case HttpRequestException _:
+				await ShowAlertAsync("Failed to connect to the server.");
+				break;
+			default:
+				await ShowAlertAsync("Something went wrong!");
+				break;
+		}
+	}
+
+}

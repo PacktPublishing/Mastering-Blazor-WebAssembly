@@ -70,8 +70,8 @@ public class BooksHttpClientService : IBooksService
 
 	public async Task UploadBookCoverAsync(string bookId, Stream stream, string fileName)
 	{
-		var content = new MultipartFormDataContent();
-		var fileContent = new StreamContent(stream);
+		using var content = new MultipartFormDataContent();
+		using var fileContent = new StreamContent(stream);
 		fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
 		{
 			Name = "file",

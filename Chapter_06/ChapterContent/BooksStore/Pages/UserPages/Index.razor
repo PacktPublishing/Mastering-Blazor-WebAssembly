@@ -47,7 +47,7 @@ Welcome to our Books Store new app.
 		 //Call the JS import and pass the path of the external js path that will placed in the wwwroot folder
 		var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./scripts.js");
 		 //From the module JS object, we can call the getRandomBook() method 
-		var randomBook = await module.InvokeAsync<string>("showPrompt", "Hello");
+		var randomBook = await module.InvokeAsync<Book>("getRandomBook");
 		Navigation.LocationChanged += Navigation_LocationChanged;
 		_books = await BooksService.GetAllBooksAsync();
 	}

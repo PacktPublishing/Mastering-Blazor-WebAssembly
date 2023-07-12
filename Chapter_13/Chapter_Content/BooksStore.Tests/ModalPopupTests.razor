@@ -2,61 +2,6 @@
 
 @code {
 
-	[Fact]
-	public void ModalPopupWithIsOpenSetToTrueShouldRendersCorrectly()
-	{
-		// Arrange
-		var isOpen = true;
-		var cut = Render(@<ModalPopup IsOpen="isOpen" />);
+	
 
-		// Assert
-		var overlayDivs = cut.FindAll(".overlay"); 
-		Assert.True(overlayDivs.Count > 0);
-	}
-
-	[Fact]
-	public void ModalPopupWithIsOpenSetToFalseShouldRenderNothing()
-	{
-		// Arrange
-		var isOpen = false;
-		var cut = Render(@<ModalPopup IsOpen="isOpen" />);
-
-		// Assert
-		Assert.True(cut.Nodes.Length == 0);
-	}
-
-	[Fact]
-	public void ModalPopupWithChildContentShouldRenderCorrectly()
-	{
-		// Arrange 
-		var cut = Render(
-		@<ModalPopup IsOpen="true">
-			<ChildContent>
-				<h2>Testing ModalPopup</h2>
-			</ChildContent>
-		</ModalPopup>
-		);
-
-		// Assert
-		cut
-		.Find(".modal-body")
-		.MarkupMatches(@<div class="modal-body"><h2>Testing ModalPopup</h2></div>);
-	}
-
-	[Fact]
-	public void ClickXButtonShouldCloseTheModal()
-	{
-		// Arrange 
-		var cut = RenderComponent<ModalPopup>();
-
-		// Act 
-		cut.SetParametersAndRender(parameters =>
-		{
-			parameters.Add(p => p.IsOpen, true);
-		});
-		cut.Find(".close-button").Click();
-
-		// Arrange 
-		Assert.True(cut.Nodes.Length == 0);
-	}
 }

@@ -23,14 +23,18 @@ alt="https://www.packtpub.com/" border="5" /></a>
 
 
 ## Instructions and Navigations
-All of the code is organized into folders. For example, Chapter02.
+All of the code is organized into folders. For example, Chapter06.
 
 The code will look like the following:
 ```
-if (test expression)
-{
-  Statement upon condition is true
-}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    ...
+    <div class="d-flex">
+      <button class="btn btn-outline-primary">
+        Login</button>
+    </div>
+  </div>
+</nav>
 ```
 
 **Following is what you need for this book:**
@@ -42,11 +46,9 @@ With the following software and hardware list you can run all code files present
 
 | Chapter  | Software required                   | OS required                        |
 | -------- | ------------------------------------| -----------------------------------|
-| 1        | R version 3.3.0                     | Windows, Mac OS X, and Linux (Any) |
-| 2        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 3        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 4        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
-| 5        | Rstudio Desktop 0.99.903            | Windows, Mac OS X, and Linux (Any) |
+| 1-15      | Visual Studio 2022                 | Windows, Mac OS X, and Linux (Any) |
+| 1-15      | Visual Studio Code                 | Windows, Mac OS X, and Linux (Any) |
+| 1-15      | .NET 7.0                           | Windows, Mac OS X, and Linux (Any) |
 
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](Graphics Bundle Link).

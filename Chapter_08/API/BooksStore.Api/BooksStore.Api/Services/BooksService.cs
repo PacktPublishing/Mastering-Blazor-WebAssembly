@@ -40,5 +40,21 @@ namespace BooksStore.Api.Services
             return Task.FromResult(_allBooks);
         }
 
+        public Task<Book> AddBookAsync(AddBookRequest request)
+        {
+            var book = new Book
+            {
+                AuthorName = request.AuthorName,
+                Description = request.Description,
+                PagesCount = request.PagesCount,
+                Price = request.Price,
+                Title = request.Title,
+                Id = Guid.NewGuid().ToString(),
+            };
+            _allBooks.Add(book);
+
+            return Task.FromResult(book);
+        }
+
     }
 }

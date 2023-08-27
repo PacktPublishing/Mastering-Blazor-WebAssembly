@@ -39,10 +39,11 @@ namespace BooksStore.Api.Controllers
         [ProducesResponseType(200, Type = typeof(Book))]
         [ProducesResponseType(400, Type = typeof(ApiErrorResponse))]
         [HttpPost()]
-        public Task<IActionResult> Add([FromBody] AddBookRequest model)
+        public async Task<IActionResult> Add([FromBody] AddBookRequest model)
         {
             // Validate the model 
-            return Task.FromResult<IActionResult>(Ok(new ApiSuccessResponse<Book>()));
+            var book = await _booksService.AddBookAsync(model);
+            return Ok(book);
         }
 
         [ProducesResponseType(200, Type = typeof(ApiSuccessResponse<Book>))]

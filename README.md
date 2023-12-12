@@ -1,10 +1,20 @@
 # Mastering Blazor WebAssembly
 
-<a href="https://www.packtpub.com/product/mastering-blazor-webassembly/9781803235103"><img src="https://content.packt.com/B18601/cover_image_small.jpeg" alt="Mastering Blazor WebAssembly" height="256px" align="right"></a>
+<a href="https://www.packtpub.com/product/mastering-blazor-webassembly/9781803235103"><img src="https://static.packt-cdn.com/products/9781803235103/cover/smaller" alt="Mastering Blazor WebAssembly" height="256px" align="right"></a>
 
 This is the code repository for [Mastering Blazor WebAssembly](https://www.packtpub.com/product/mastering-blazor-webassembly/9781803235103), published by Packt.
 
 **Step by Step guide to developing an advanced Single Page Application with Blazor WebAssembly**
+
+
+## Compatibility Note
+
+The content of the book was written on top of .NET 7.0. 
+With the release of .NET 8.0 the book is still valid as there are minor changes for WebAssembly in .NET 8.0 and you can check them out through the following blog:
+[Mastering Blazor WebAssembly .NET 8.0 Notes](https://ahmadmozaffar.net/Blog/Details/Mastering-Blazor-WebAssembly-Book-.NET-8.0-Notes)
+
+
+
 
 ## What is this book about?
 Blazor WebAssembly has become the trend in the world of software development, as a revolutionary technology that allows you to develop rich user interface web applications using C# without JavaScript. Blazor WebAssembly can also be run natively in the browser & mobile apps shortly with .NET MAUI; this adds a superweapon in the toolbox for .NET developers and open the doors for the JavaScript community to have a stable framework to build Single Page Applications, maintained by Microsoft and driven by the community.

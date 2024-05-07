@@ -70,7 +70,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 * Building Blazor WebAssembly Applications with gRPC  [[Packt]](https://www.packtpub.com/product/building-blazor-webassembly-applications-with-grpc/9781804610558) [[Amazon]](https://www.amazon.com/dp/1804610550)
 
 ## Errata 
-* Page 97, first code line 7, **Page: $@_book?.Price** _should be_ **Price: $@_book?.Price</**
+* Page 97, first code line 7, **Page: $@_book?.Price** _should be_ **Price: $@_book?.Price**
 
 ## Get to Know the Author
 **Ahmad Mozaffar**

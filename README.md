@@ -69,6 +69,9 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 
 * Building Blazor WebAssembly Applications with gRPC  [[Packt]](https://www.packtpub.com/product/building-blazor-webassembly-applications-with-grpc/9781804610558) [[Amazon]](https://www.amazon.com/dp/1804610550)
 
+## Errata 
+* Page 97, line 7 in the first code **Page: $@_book?.Price** _should be_ **Price: $@_book?.Price</**
+
 ## Get to Know the Author
 **Ahmad Mozaffar**
 is a senior software engineer, cloud developer, and trainer who is currently working at ContraForce as a senior full-stack engineer responsible for developing SaaS platforms using Blazor, Azure Serverless, and other modern technologies. His passion for software development, especially with .NET and Azure started at a very early age. He loves teaching people about software using Blazor, Azure, and other Microsoft technologies through his YouTube channel, AK Academy, or writing articles on multiple platforms that reached more than 400K readers.

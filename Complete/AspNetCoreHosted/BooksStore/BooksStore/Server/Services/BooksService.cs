@@ -70,7 +70,7 @@ namespace BooksStore.Server.Services
 		public Task AddBookAsync(SubmitBook book)
         {
             _allBooks.Add(new()
-            {
+            { 
                 AuthorName = book.Author,
                 Description = book.Description,
                 PagesCount = book.PagesCount,

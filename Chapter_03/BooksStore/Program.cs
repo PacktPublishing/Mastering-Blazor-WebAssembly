@@ -13,3 +13,13 @@ builder.Services.AddScoped<ILoggingService, ConsoleLoggingService>();
 builder.Services.AddScoped<IBooksService, LocalBooksService>();
 
 await builder.Build().RunAsync();
+
+public class Person
+{
+	public decimal Salary { get; set; }
+	public decimal CalculateTax(float percentage)
+	{
+		// 20
+		return Salary * 20;
+	}
+}

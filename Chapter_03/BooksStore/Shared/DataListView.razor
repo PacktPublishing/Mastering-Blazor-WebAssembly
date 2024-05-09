@@ -28,6 +28,8 @@
 	public EventCallback<TItemType> OnItemClicked { get; set; }
 	[Parameter]
 	public int ColumnsCount { get; set; } = 4;
-	
-	private int _columnWidth => 100 / ColumnsCount; 
+
+	// Calculated property 
+	private int _columnWidth => 100 / ColumnsCount;
+
 }

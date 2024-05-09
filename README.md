@@ -1,10 +1,20 @@
 # Mastering Blazor WebAssembly
 
-<a href="https://www.packtpub.com/product/mastering-blazor-webassembly/9781803235103"><img src="https://content.packt.com/B18601/cover_image_small.jpeg" alt="Mastering Blazor WebAssembly" height="256px" align="right"></a>
+<a href="https://www.packtpub.com/product/mastering-blazor-webassembly/9781803235103"><img src="https://static.packt-cdn.com/products/9781803235103/cover/smaller" alt="Mastering Blazor WebAssembly" height="256px" align="right"></a>
 
 This is the code repository for [Mastering Blazor WebAssembly](https://www.packtpub.com/product/mastering-blazor-webassembly/9781803235103), published by Packt.
 
 **Step by Step guide to developing an advanced Single Page Application with Blazor WebAssembly**
+
+
+## Compatibility Note
+
+The content of the book was written on top of .NET 7.0. 
+With the release of .NET 8.0 the book is still valid as there are minor changes for WebAssembly in .NET 8.0 and you can check them out through the following blog:
+[Mastering Blazor WebAssembly .NET 8.0 Notes](https://ahmadmozaffar.net/Blog/Details/Mastering-Blazor-WebAssembly-Book-.NET-8.0-Notes)
+
+
+
 
 ## What is this book about?
 Blazor WebAssembly has become the trend in the world of software development, as a revolutionary technology that allows you to develop rich user interface web applications using C# without JavaScript. Blazor WebAssembly can also be run natively in the browser & mobile apps shortly with .NET MAUI; this adds a superweapon in the toolbox for .NET developers and open the doors for the JavaScript community to have a stable framework to build Single Page Applications, maintained by Microsoft and driven by the community.
@@ -58,6 +68,9 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 * Blazor WebAssembly By Example - Second Edition  [[Packt]](https://www.packtpub.com/product/blazor-webassembly-by-example-second-edition/9781803241852) [[Amazon]](https://www.amazon.com/dp/1803241853)
 
 * Building Blazor WebAssembly Applications with gRPC  [[Packt]](https://www.packtpub.com/product/building-blazor-webassembly-applications-with-grpc/9781804610558) [[Amazon]](https://www.amazon.com/dp/1804610550)
+
+## Errata 
+* Page 97, first code line 7, **Page: $@_book?.Price** _should be_ **Price: $@_book?.Price**
 
 ## Get to Know the Author
 **Ahmad Mozaffar**

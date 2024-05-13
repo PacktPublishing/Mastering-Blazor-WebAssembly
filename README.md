@@ -71,6 +71,12 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 
 ## Errata 
 * Page 97, first code line 7, **Page: $@_book?.Price** _should be_ **Price: $@_book?.Price**
+* Page 130, the last line of code
+  ```
+  validationErrorMessage = "Invalid time value";
+  result = TimeOnly.FromDateTime(DateTime.Now);
+  return false;
+  ```
 
 ## Get to Know the Author
 **Ahmad Mozaffar**
